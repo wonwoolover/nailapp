@@ -1,0 +1,161 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Reviews</title>
+  <link rel="stylesheet" href="style.css">
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&display=swap" rel="stylesheet">
+  <!-- Bootstrap Icons -->
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.1/font/bootstrap-icons.css" rel="stylesheet">
+  <!-- Bootstrap CSS -->
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+</head>
+<body>
+  <section id="overview" class="section hero">
+    <h2>Welcome</h2>
+    <p>Feel Free to -??</p>
+  </section>
+
+  <section id="feedback" class="section feedback-section">
+    <h2>Customer Feedback</h2>
+    <p class="section-subtitle">We value your opinion. Share your experience with us.</p>
+
+    <!-- Feedback Form -->
+    <form id="feedbackForm" class="card">
+      <label for="name">Your Name</label>
+      <input type="text" id="name" required placeholder="Enter your name">
+
+      <label for="message">Your Review <span id="charCount">0/200</span></label>
+      <textarea id="message" rows="4" maxlength="200" required placeholder="Write your review here..."></textarea>
+
+      <button type="submit" class="btn-primary">Submit Review</button>
+    </form>
+
+    <!-- Recent Feedback -->
+    <div class="feedback-display card">
+      <h3>Recent Feedback</h3>
+      <ul id="feedbackList"></ul>
+      <button id="seeAllBtn" class="btn-secondary">See All Reviews</button>
+    </div>
+
+    <!-- Modal for All Feedback -->
+    <div id="modal" class="modal">
+      <div class="modal-content card">
+        <span class="close">&times;</span>
+        <h3>All Customer Feedback</h3>
+        <ul id="allFeedbackList"></ul>
+      </div>
+    </div>
+  </section>
+
+  <section id="contact" class="section contact-section">
+    <h2>Contact Us</h2>
+    <p class="section-subtitle">Have questions? Reach out below.</p>
+    <form class="contact-form card">
+      <input type="text" placeholder="Your Name" required>
+      <input type="email" placeholder="Your Email" required>
+      <textarea rows="4" placeholder="Your Message" required></textarea>
+      <button type="submit" class="btn-primary">Send Message</button>
+    </form>
+  </section>
+
+  <!--  Taskbar -->
+  <footer>
+    <div class="container">
+      <div class="row d-flex justify-content-center py-2 px-5">
+        <div class="col-3 text-center">
+          <a href="firstpage.html" class="btn">
+            <i class="bi bi-house-door-fill fs-2"></i>
+            <h4 class="mt-0 fs-6">HOME</h4>
+          </a>
+        </div>
+        <div class="col-3 text-center">
+          <a href="about_profile.html" class="btn">
+            <i class="bi bi-file-person-fill fs-2"></i>
+            <h4 class="mt-0 fs-6">PROFILE</h4>
+          </a>
+        </div>
+        <div class="col-3 text-center">
+          <a href="review.html" class="btn">
+            <i class="bi bi-book-fill fs-2"></i>
+            <h4 class="mt-0 fs-6">REVIEW</h4>
+          </a>
+        </div>
+        <div class="col-3 text-center">
+          <h3 id="demo" class="fs-5 mt-2"></h3>
+        </div>
+      </div>
+    </div>
+  </footer>
+
+  <script>
+    //  Feedback Storage
+    let feedbacks = [];
+    let colors = ["#F2E9E4", "#EADBD7", "#D8C3A5", "#E2ECE9", "#E6E6FA"];
+
+    function addFeedback() {
+      const name = document.getElementById("name").value.trim();
+      const msg = document.getElementById("message").value.trim();
+      if (!name || !msg) return;
+
+      feedbacks.push({ who: name, text: msg, when: new Date().toLocaleString() });
+      renderLast3();
+      document.getElementById("feedbackForm").reset();
+      document.getElementById("charCount").textContent = "0/200";
+    }
+
+    function renderLast3() {
+      let box = document.getElementById("feedbackList");
+      box.innerHTML = "";
+      let last = feedbacks.slice(-3);
+      for (let fb of last) {
+        let c = colors[Math.floor(Math.random()*colors.length)];
+        box.innerHTML += `<li style="background:${c};padding:5px;margin:5px 0;">${fb.who}: ${fb.text} (${fb.when})</li>`;
+      }
+    }
+
+    function updateCharCount() {
+      const num = document.getElementById("message").value.length;
+      document.getElementById("charCount").textContent = num + "/200";
+    }
+
+    function showAll() {
+      const modal = document.getElementById("modal");
+      modal.style.display = "block";
+      let lst = document.getElementById("allFeedbackList");
+      lst.innerHTML = "";
+      for (let fb of feedbacks) {
+        let c = colors[Math.floor(Math.random()*colors.length)];
+        lst.innerHTML += `<li style="background:${c};padding:5px;margin:5px 0;">${fb.who}: ${fb.text} (${fb.when})</li>`;
+      }
+    }
+
+    function closeModal() {
+      document.getElementById("modal").style.display = "none";
+    }
+
+    //  Event Bindings
+    document.getElementById("feedbackForm").onsubmit = e => { e.preventDefault(); addFeedback(); };
+    document.getElementById("message").oninput = updateCharCount;
+    document.getElementById("seeAllBtn").onclick = showAll;
+    document.querySelector(".close").onclick = closeModal;
+    window.onclick = e => { if (e.target === document.getElementById("modal")) closeModal(); };
+
+    //  Friendly Day Message
+    let day = new Date();
+    let days = ["Super Sunday","Awesome Monday","Happy Tuesday","Joyful Wednesday","Wonderful Thursday","Fantastic Friday","Nice Saturday"];
+    document.getElementById("demo").innerHTML = days[day.getDay()];
+
+    //  Taskbar Active Highlight
+    const navBtns = document.querySelectorAll("footer .btn");
+    const currentPage = window.location.pathname.split("/").pop();
+    navBtns.forEach(btn => {
+      if (btn.getAttribute("href") === currentPage) {
+        btn.classList.add("active");
+      } else {
+        btn.classList.remove("active");
+      }
+    });
+  </script>
+</body>
+</html>

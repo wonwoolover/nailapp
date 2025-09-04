@@ -1,0 +1,150 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Profile</title>
+        <!-- Bootstraps -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+    
+    <!-- Bootstrap Icons -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.5/font/bootstrap-icons.css" rel="stylesheet">
+    <!-- AOS  -->
+    <link href="https://unpkg.com/aos@2.3.1/dist/aos.css" rel="stylesheet">
+    <script src="https://unpkg.com/aos@2.3.1/dist/aos.js"></script>
+    <link rel="stylesheet" href="style.css">
+</head>
+
+<body id="body">
+
+    <div class="container justify-content-center w-100 mt-4">
+        <div class="row" id="text">
+            <div class="col justify-content-center mt-2" id="box">
+                <img src="image/profile.webp" alt="" id="profile" class="justify-content-center">
+                <ul>
+                    <li class="fs-4">Name:Anna</li>
+                    <li class="fs-4">Age:23</li>
+                    <li class="fs-4">Role:Customer</li>
+                    <li class="fs-4">Location:Yangon Myanmar</li>
+                    <li class="fs-4">Bio:-</li>
+                </ul>
+
+            </div>
+
+
+        </div>
+
+    </div>
+
+    <footer>
+        <div class="container">
+            <div class="row d-flex justify-content-center py-2 px-5">
+                    <div class="col-lg-3">
+                    
+                       <a href="firstpage.html" class="btn"><i class="bi bi-house-door-fill fs-2"></i><h4 class="mt-0 fs-5">HOME</h4></a>
+                    </div>
+
+                    <div class="col-lg-3" id="btn">
+                        <a href="about_profile.html" class="btn"><i class="bi bi-file-person-fill fs-2"></i><h4 class="mt-0 fs-5">PROFILE</h4></a>
+
+                    </div>
+                    <div class="col-lg-3">
+                        <a href="review.html" class="btn"><i class="bi bi-book-fill fs-2"></i><h4 class="mt-0 fs-5">Review</h4></a>
+                    </div>
+
+                    <div class="col-lg-3">
+                        <h3 id="demo" class="fs-2 mt-2"></h3>
+                    </div>
+                
+
+            </div>
+
+        </div>
+    </footer>
+
+    <script>
+// friendly message
+let day = new Date();
+let showday = "";
+
+switch( day.getDay()){
+
+            case 0:
+                showday = "Super Sunday";
+                break;
+            case 1:
+                showday ="Awesome Monday"; 
+                break;   
+            case 2:
+                showday ="Happy Tuesday"; 
+                break;
+            case 3:
+                showday ="Joyful Wednesday"; 
+                break;
+            case 4:
+                showday ="Wonderful Thursday";
+                break;  
+                
+            case 5:
+                showday ="Fantastic Friday"; 
+                break;
+            
+            case 6:
+                showday ="Nice Saturday"
+                
+                break;
+
+}
+
+document.getElementById("demo").innerHTML = showday;
+
+// taskbar active
+  const navBtns = document.querySelectorAll('.btn');
+
+  navBtns.forEach(btn => {
+    btn.addEventListener('click', ()=> {
+      removeActive();
+      btn.classList.add('active');
+    });
+
+    function removeActive(){
+        navBtns.forEach((btn)=>{
+            btn.classList.remove('active');
+        })
+    }
+
+    if (btn.href === window.location.href) {
+      btn.classList.add('active');
+    }
+    else{
+        btn.classList.remove('active');
+    }
+  });
+  
+  //background looping
+  const bgImageArray = ['image/bg1.png', 'image/bg2.jpg', 'image/bg3.jpg', 'image/bg4.avif'];
+  function bgImageSequence() {
+    for (let i = 0; i < bgImageArray.length; i++) {
+      setTimeout(() => {
+        document.getElementById("body").style.background = "url("+ bgImageArray[i] +") no-repeat bottom right";
+        document.getElementById("body").style.backgroundSize = "cover";
+
+        
+        if (i === bgImageArray.length - 1) {
+          setTimeout(() => {
+            bgImageSequence(); 
+          }, 1000);
+        }
+    
+      }, 1000 * i);
+    }
+  }
+
+  bgImageSequence();
+    </script>
+
+  
+    
+</body>
+</html>
